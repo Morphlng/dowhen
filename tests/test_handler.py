@@ -114,3 +114,13 @@ def test_chain():
     out = output.getvalue()
     assert "(Pdb) " in out
     assert "102" in out
+
+
+def test_once():
+    def f(x):
+        return x
+
+    handler = dowhen.do("x = 1").when(f, "return x").once()
+    assert f(0) == 1
+    assert handler.removed
+    assert f(0) == 0

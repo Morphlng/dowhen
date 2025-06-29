@@ -51,6 +51,11 @@ assert f(0) == 1
 # You can remove the handler
 handler.remove()
 assert f(0) == 100
+
+# Or automatically remove it after firing once
+handler = do("x = 1").when(f, "return x").once()
+assert f(0) == 1
+assert f(0) == 100
 ```
 
 ### bp

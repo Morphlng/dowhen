@@ -21,6 +21,7 @@ class EventHandler:
         self.callbacks: list[Callback] = [callback]
         self.disabled = False
         self.removed = False
+        self.one_shot = False
 
     def disable(self) -> None:
         if self.removed:
@@ -42,6 +43,7 @@ class EventHandler:
         self.removed = True
 
     def __call__(self, frame: FrameType, **kwargs) -> Any:
+        fired = False
         if not self.disabled:
             if not self.trigger.has_event(frame):
                 return DISABLE
@@ -49,9 +51,13 @@ class EventHandler:
             if should_fire is DISABLE:
                 self.disable()
             elif should_fire:
+                fired = True
                 for cb in self.callbacks:
                     if cb(frame, **kwargs) is DISABLE:
                         self.disable()
+
+        if fired and self.one_shot:
+            self.remove()
 
         if self.disabled:
             return DISABLE
@@ -78,4 +84,8 @@ class EventHandler:
         from .callback import Callback
 
         self.callbacks.append(Callback.goto(target))
+        return self
+
+    def once(self) -> "EventHandler":
+        self.one_shot = True
         return self
