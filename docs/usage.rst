@@ -1,7 +1,7 @@
 Usage Guide
 ===========
 
-This guide provides comprehensive information on how to use dowhen for instrumentation.
+This guide provides comprehensive information on how to use ``dowhen`` for instrumentation.
 
 Basic Concepts
 --------------
@@ -25,7 +25,7 @@ Entity
 
 You need to specify an entity to instrument. This can be a function, method, code object, class, module or ``None``.
 
-If you pass a class or module, dowhen will instrument all functions and methods in that class or module.
+If you pass a class or module, ``dowhen`` will instrument all functions and methods in that class or module.
 
 If you pass ``None``, ``dowhen`` will instrument globally, which means every code object will be instrumented.
 This will introduce an overhead at the beginning, but the unnecessary events will be disabled while the
@@ -204,7 +204,7 @@ will be automatically passed to the function.
 
 Special arguments:
 
-* ``_frame`` - when used, the current frame object is passed.
+* ``_frame`` - when used, the current `frame object <https://docs.python.org/3/reference/datamodel.html#frame-objects>`_ is passed.
 * ``_retval`` - when used, the return value of the function is passed. Only valid for ``<return>`` triggers.
 
 If you want to change the value of the local variables, you need to return a dictionary
